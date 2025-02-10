@@ -185,7 +185,7 @@ function App() {
                 }}
                 className="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white px-8 py-3 rounded-xl hover:opacity-90 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full md:w-auto"
               >
-                Get Started
+                Start Chat
                 <ArrowRight className="inline-block ml-2 h-5 w-5" />
               </button>
             </div>
@@ -548,10 +548,10 @@ const ChatInterface = ({
   }, [messages]);
 
   return (
-    <div className="fixed inset-0 bg-black/10 backdrop-blur-md flex items-center justify-center p-4 md:p-6 z-50">
-      <div className="w-full max-w-4xl h-[85vh] bg-white/95 rounded-3xl shadow-2xl border border-white/20 flex flex-col">
+    <div className="fixed inset-0 bg-black/10 backdrop-blur-md flex items-center justify-center p-0 md:p-6 z-50">
+      <div className="w-full h-full md:h-[85vh] md:max-w-4xl bg-white/95 rounded-none md:rounded-3xl shadow-2xl border border-white/20 flex flex-col">
         {/* Chat Header */}
-        <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between bg-white/50 backdrop-blur-sm rounded-t-3xl">
+        <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between bg-white/50 backdrop-blur-sm md:rounded-t-3xl">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-500 p-2.5 shadow-lg">
               <Brain className="h-7 w-7 text-white" />
@@ -561,43 +561,18 @@ const ChatInterface = ({
               <p className="text-sm text-gray-600">Your AI Education Guide</p>
             </div>
           </div>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2">
-              <Globe className={`h-5 w-5 ${isInternetSearchEnabled ? 'text-blue-600' : 'text-gray-400'}`} />
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input
-                  type="checkbox"
-                  className="sr-only peer"
-                  checked={isInternetSearchEnabled}
-                  onChange={(e) => setIsInternetSearchEnabled(e.target.checked)}
-                />
-                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-                <span className="ms-3 text-sm font-medium text-gray-600">
-                  Internet Search
-                </span>
-              </label>
-            </div>
-            <button
-              onClick={() => setShowEnrichModal(true)}
-              className="flex items-center space-x-2 bg-violet-50 px-3 py-1.5 rounded-xl hover:bg-violet-100 transition-colors duration-200"
-            >
-              <BookPlus className="h-5 w-5 text-violet-600" />
-              <span className="text-sm text-violet-600 font-medium hidden md:inline">Enrich Knowledge</span>
-            </button>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-xl transition-colors duration-200"
-              aria-label="Close chat"
-            >
-              <X className="h-6 w-6 text-gray-500 hover:text-gray-700" />
-            </button>
-          </div>
+          <button
+            onClick={onClose}
+            className="p-2 hover:bg-gray-100 rounded-xl transition-colors"
+          >
+            <X className="h-6 w-6 text-gray-500" />
+          </button>
         </div>
 
         {/* Chat Messages */}
-        <div 
+        <div
           ref={chatContainerRef}
-          className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6 scroll-smooth scrollbar-thin scrollbar-thumb-violet-200 scrollbar-track-transparent hover:scrollbar-thumb-violet-300"
+          className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4"
         >
           {messages.map((msg, index) => (
             <div
@@ -664,64 +639,52 @@ const ChatInterface = ({
         </div>
 
         {/* Chat Input */}
-        <div className="p-4 md:p-6 bg-white/50 backdrop-blur-sm border-t border-gray-100 rounded-b-3xl">
-          <div className="flex items-end space-x-4">
+        <div className="p-4 md:p-6 border-t border-gray-100 bg-white/50 backdrop-blur-sm">
+          <div className="flex items-center space-x-2">
             <div className="flex-1 relative">
-              <div className="absolute left-4 bottom-4">
-                <button
-                  onClick={() => setShowEmoji(!showEmoji)}
-                  className="text-gray-400 hover:text-violet-600 transition-colors"
-                >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </button>
-              </div>
-              <textarea
+              <input
                 ref={chatInputRef}
+                type="text"
                 value={inputMessage}
                 onChange={(e) => setInputMessage(e.target.value)}
-                onKeyPress={(e: any) => handleKeyPress(e)}
-                placeholder="Ask me anything about education..."
-                rows={1}
-                className="w-full pl-14 pr-20 py-4 bg-white border-2 border-gray-100 focus:border-violet-500 rounded-2xl resize-none focus:ring-2 focus:ring-violet-200 focus:outline-none transition-all duration-200"
-                style={{
-                  minHeight: '60px',
-                  maxHeight: '120px'
-                }}
+                onKeyDown={handleKeyPress}
+                placeholder="Type your message..."
+                className="w-full px-4 py-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
               />
-              {inputMessage.length > 0 && (
-                <button
-                  onClick={() => setInputMessage('')}
-                  className="absolute right-4 bottom-4 text-gray-400 hover:text-gray-600 p-1 hover:bg-gray-100 rounded-full transition-all duration-200"
-                >
-                  <X className="h-5 w-5" />
-                </button>
-              )}
             </div>
             <button
               onClick={handleSendMessage}
-              disabled={!inputMessage.trim()}
-              className="bg-gradient-to-r from-violet-600 to-blue-600 text-white p-4 rounded-2xl hover:from-violet-700 hover:to-blue-700 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transform hover:-translate-y-0.5 disabled:hover:transform-none"
+              disabled={!inputMessage.trim() || isTyping}
+              className="p-3 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white rounded-xl hover:opacity-90 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
               <Send className="h-5 w-5" />
             </button>
           </div>
           
-          {/* Features Bar */}
-          <div className="mt-4 flex items-center justify-center space-x-6 text-sm text-gray-500">
+          {/* Settings Bar */}
+          <div className="flex items-center justify-between mt-4">
             <div className="flex items-center space-x-2">
-              <MessageSquare className="h-4 w-4" />
-              <span>Real-time chat</span>
+              <Globe className={`h-5 w-5 ${isInternetSearchEnabled ? 'text-blue-600' : 'text-gray-400'}`} />
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="sr-only peer"
+                  checked={isInternetSearchEnabled}
+                  onChange={(e) => setIsInternetSearchEnabled(e.target.checked)}
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                <span className="ms-3 text-sm font-medium text-gray-600">
+                  Internet Search
+                </span>
+              </label>
             </div>
-            <div className="flex items-center space-x-2">
-              <Brain className="h-4 w-4" />
-              <span>AI-powered</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-2">
-              <GraduationCap className="h-4 w-4" />
-              <span>Education focused</span>
-            </div>
+            <button
+              onClick={() => setShowEnrichModal(true)}
+              className="flex items-center space-x-2 bg-violet-50 px-3 py-1.5 rounded-xl hover:bg-violet-100 transition-colors duration-200"
+            >
+              <BookPlus className="h-5 w-5 text-violet-600" />
+              <span className="text-sm text-violet-600 font-medium hidden md:inline">Enrich Knowledge</span>
+            </button>
           </div>
         </div>
       </div>
