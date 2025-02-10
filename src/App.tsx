@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageSquare, GraduationCap, BookOpen, Building2, Brain, Send, Menu, X, User, Lock, Mail, ArrowRight, Eye, EyeOff } from 'lucide-react';
+import { MessageSquare, GraduationCap, BookOpen, Building2, Brain, Send, Menu, X, User, Lock, Mail, ArrowRight, Eye, EyeOff, BookPlus, Save, Globe } from 'lucide-react';
 import { Toaster, toast } from 'react-hot-toast';
 import { supabase } from './lib/supabase';
 import { getGeminiResponse } from './lib/gemini';
+import { addKnowledgeEntry, getKnowledgeEntries, searchInternet } from './lib/knowledgeBase';
+import heroImage from './assets/hero.jpg';
+import heroTwo from './assets/hero2.jpg';
 
 interface Message {
   id: number;
@@ -41,7 +44,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-violet-50 to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-b from-violet-50 to-white">
       <Toaster position="top-center" />
       
       <nav className="bg-white/70 backdrop-blur-lg sticky top-0 z-40 border-b border-white/20">
@@ -50,7 +53,7 @@ function App() {
             <div className="flex items-center">
               <GraduationCap className="h-8 w-8 text-violet-600" />
               <span className="ml-2 text-xl font-bold bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-transparent bg-clip-text">
-                EduGuide AI
+                Tertiary Advisory
               </span>
             </div>
             
@@ -157,33 +160,96 @@ function App() {
         )}
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center">
-          <h1 className="text-6xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-transparent bg-clip-text">
-            Your Personal Guide to Higher Education
-          </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Get personalized advice and insights about universities, courses, and career paths. Make informed decisions about your academic future.
-          </p>
-          <button
-            onClick={() => {
-              if (isAuthenticated) {
-                setShowChat(true);
-              } else {
-                setAuthMode('login');
-              }
-            }}
-            className="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white px-8 py-4 rounded-xl text-lg hover:opacity-90 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Start Your Journey
-          </button>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+        <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-8">
+          {/* Text Content */}
+          <div className="flex-1 space-y-6 text-center md:text-left w-full">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+              <span className="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-transparent bg-clip-text">
+                Your Personal
+              </span>
+              <br />
+              Education Advisor
+            </h1>
+            <p className="text-gray-600 text-lg md:text-xl max-w-xl mx-auto md:mx-0">
+              Get personalized guidance for your tertiary education journey. We help you make informed decisions about courses, universities, and career paths.
+            </p>
+            <div className="flex justify-center md:justify-start">
+              <button
+                onClick={() => {
+                  if (isAuthenticated) {
+                    setShowChat(true);
+                  } else {
+                    setAuthMode('signup');
+                  }
+                }}
+                className="bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-white px-8 py-3 rounded-xl hover:opacity-90 transition duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full md:w-auto"
+              >
+                Get Started
+                <ArrowRight className="inline-block ml-2 h-5 w-5" />
+              </button>
+            </div>
+          </div>
+          
+          {/* Image Container */}
+          <div className="flex-1 relative w-full">
+            <div className="relative w-full h-[450px] md:h-[500px] lg:h-[600px]">
+              <img
+                src={heroImage}
+                alt="Students collaborating"
+                className="w-full h-full object-cover rounded-2xl shadow-2xl transform hover:scale-[1.02] transition duration-500"
+              />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-tr from-purple-600/20 via-transparent to-transparent"></div>
+            </div>
+            {/* Floating Stats */}
+            <div className="absolute -bottom-4 -left-4 bg-white p-4 rounded-xl shadow-lg transform hover:-translate-y-1 transition duration-300">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-violet-100 rounded-lg">
+                  <GraduationCap className="h-6 w-6 text-violet-600" />
+                </div>
+                <div>
+                  <p className="text-sm text-gray-600">Success Rate</p>
+                  <p className="font-bold text-violet-600">98%</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
       <div id="features" className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-transparent bg-clip-text">
-            Why Choose EduGuide AI?
+            Why Choose Tertiary Advisory?
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+            <div>
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent mb-6">
+                Start Your Journey Today
+              </h1>
+              <p className="text-xl text-gray-600 mb-8">
+                Get expert advice on courses, careers, and educational opportunities with our advanced AI chatbot.
+              </p>
+              <a
+                href="#chat"
+                className="inline-flex items-center px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-violet-600 to-blue-600 rounded-xl hover:from-violet-700 hover:to-blue-700 transition-all duration-200"
+              >
+                Start Chatting
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </a>
+            </div>
+            <div className="relative">
+              <img
+                src={heroTwo}
+                alt="Tertiary Advisory AI Chatbot"
+                className="w-full h-auto rounded-3xl shadow-2xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-tr from-violet-500/20 to-transparent rounded-3xl"></div>
+            </div>
+          </div>
+
+          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-600 via-violet-600 to-indigo-600 text-transparent bg-clip-text">
+            Why Choose Tertiary Advisory?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="p-8 bg-white/50 backdrop-blur-lg rounded-3xl shadow-xl hover:shadow-2xl transition duration-300 border border-white/20">
@@ -227,6 +293,182 @@ function App() {
   );
 }
 
+const EnrichKnowledgeModal = ({
+  isOpen,
+  onClose,
+  currentUser
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  currentUser: { username: string } | null;
+}) => {
+  const [topic, setTopic] = useState('');
+  const [content, setContent] = useState('');
+  const [category, setCategory] = useState<KnowledgeEntry['category']>('general');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [passKey, setPassKey] = useState('');
+  const [isPassKeyValid, setIsPassKeyValid] = useState(false);
+
+  const handlePassKeySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passKey === '2222') {
+      setIsPassKeyValid(true);
+    } else {
+      toast.error('Invalid pass key');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!topic.trim() || !content.trim()) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await addKnowledgeEntry({
+        topic: topic.trim(),
+        content: content.trim(),
+        category,
+        created_by: currentUser?.username || 'anonymous'
+      });
+
+      toast.success('Knowledge base enriched successfully!');
+      onClose();
+      // Reset form
+      setTopic('');
+      setContent('');
+      setCategory('general');
+      setPassKey('');
+      setIsPassKeyValid(false);
+    } catch (error: any) {
+      console.error('Error enriching knowledge base:', error);
+      toast.error('Failed to enrich knowledge base. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl">
+        <div className="p-6">
+          {/* Header */}
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">
+              Enrich Knowledge Base
+            </h2>
+            <button
+              onClick={onClose}
+              className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+
+          {!isPassKeyValid ? (
+            // Pass Key Form
+            <form onSubmit={handlePassKeySubmit} className="space-y-4">
+              <div>
+                <label htmlFor="passKey" className="block text-sm font-medium text-gray-700 mb-1">
+                  Enter Pass Key
+                </label>
+                <input
+                  type="password"
+                  id="passKey"
+                  value={passKey}
+                  onChange={(e) => setPassKey(e.target.value)}
+                  className="block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter pass key to add knowledge"
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Verify Pass Key
+              </button>
+            </form>
+          ) : (
+            // Knowledge Entry Form
+            <form onSubmit={handleSubmit} className="space-y-4">
+              {/* Topic field */}
+              <div>
+                <label htmlFor="topic" className="block text-sm font-medium text-gray-700 mb-1">
+                  Topic
+                </label>
+                <input
+                  type="text"
+                  id="topic"
+                  value={topic}
+                  onChange={(e) => setTopic(e.target.value)}
+                  className="block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter topic"
+                  required
+                />
+              </div>
+
+              {/* Category field */}
+              <div>
+                <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-1">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value as KnowledgeEntry['category'])}
+                  className="block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="course">Course</option>
+                  <option value="university">University</option>
+                  <option value="career">Career</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+
+              {/* Content field */}
+              <div>
+                <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
+                  Content
+                </label>
+                <textarea
+                  id="content"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  rows={4}
+                  className="block w-full px-4 py-2 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Enter detailed information"
+                  required
+                />
+              </div>
+
+              {/* Submit button */}
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <div className="flex items-center justify-center">
+                    <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Processing...
+                  </div>
+                ) : (
+                  'Add to Knowledge Base'
+                )}
+              </button>
+            </form>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const ChatInterface = ({ 
   messages, 
   setMessages, 
@@ -247,45 +489,46 @@ const ChatInterface = ({
   const [isTyping, setIsTyping] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
   const [showEmoji, setShowEmoji] = useState(false);
+  const [showEnrichModal, setShowEnrichModal] = useState(false);
+  const [isInternetSearchEnabled, setIsInternetSearchEnabled] = useState(false);
 
   const handleSendMessage = async () => {
     if (!inputMessage.trim()) return;
 
-    const newMessage: Message = {
+    const userMessage = {
       id: messages.length + 1,
-      text: inputMessage,
+      text: inputMessage.trim(),
       sender: 'user',
       timestamp: new Date(),
       category: 'general'
     };
 
-    setMessages(prev => [...prev, newMessage]);
+    setMessages(prev => [...prev, userMessage]);
     setInputMessage('');
     setIsTyping(true);
     setShowEmoji(false);
 
     try {
+      // Get response from Gemini API
       const response = await getGeminiResponse(inputMessage);
-      
-      const aiMessage: Message = {
+
+      setMessages(prev => [...prev, {
         id: messages.length + 2,
         text: response,
         sender: 'ai',
         timestamp: new Date(),
         category: 'general'
-      };
-      
-      setMessages(prev => [...prev, aiMessage]);
+      }]);
+
     } catch (error) {
-      console.error('Error getting AI response:', error);
-      const errorMessage: Message = {
+      console.error('Error processing message:', error);
+      setMessages(prev => [...prev, {
         id: messages.length + 2,
         text: "I apologize, but I'm having trouble responding right now. Please try again.",
         sender: 'ai',
         timestamp: new Date(),
         category: 'general'
-      };
-      setMessages(prev => [...prev, errorMessage]);
+      }]);
     } finally {
       setIsTyping(false);
     }
@@ -310,21 +553,37 @@ const ChatInterface = ({
         {/* Chat Header */}
         <div className="p-4 md:p-6 border-b border-gray-100 flex items-center justify-between bg-white/50 backdrop-blur-sm rounded-t-3xl">
           <div className="flex items-center space-x-4">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-500 p-2.5 shadow-lg">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-violet-500 to-blue-500 p-2.5 shadow-lg">
               <Brain className="h-7 w-7 text-white" />
             </div>
             <div>
-              <h2 className="text-xl font-bold bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">
-                EduGuide AI Assistant
-              </h2>
-              <p className="text-sm text-gray-500">Always here to help with your education journey</p>
+              <h2 className="text-lg font-semibold text-gray-900">Tertiary Advisory</h2>
+              <p className="text-sm text-gray-600">Your AI Education Guide</p>
             </div>
           </div>
           <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center space-x-2 bg-violet-50 px-3 py-1.5 rounded-xl">
-              <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-              <span className="text-sm text-violet-600 font-medium">Online</span>
+            <div className="flex items-center space-x-2">
+              <Globe className={`h-5 w-5 ${isInternetSearchEnabled ? 'text-blue-600' : 'text-gray-400'}`} />
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  className="sr-only peer"
+                  checked={isInternetSearchEnabled}
+                  onChange={(e) => setIsInternetSearchEnabled(e.target.checked)}
+                />
+                <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+                <span className="ms-3 text-sm font-medium text-gray-600">
+                  Internet Search
+                </span>
+              </label>
             </div>
+            <button
+              onClick={() => setShowEnrichModal(true)}
+              className="flex items-center space-x-2 bg-violet-50 px-3 py-1.5 rounded-xl hover:bg-violet-100 transition-colors duration-200"
+            >
+              <BookPlus className="h-5 w-5 text-violet-600" />
+              <span className="text-sm text-violet-600 font-medium hidden md:inline">Enrich Knowledge</span>
+            </button>
             <button
               onClick={onClose}
               className="p-2 hover:bg-gray-100 rounded-xl transition-colors duration-200"
@@ -466,6 +725,13 @@ const ChatInterface = ({
           </div>
         </div>
       </div>
+      {showEnrichModal && (
+        <EnrichKnowledgeModal
+          isOpen={showEnrichModal}
+          onClose={() => setShowEnrichModal(false)}
+          currentUser={currentUser}
+        />
+      )}
     </div>
   );
 };
