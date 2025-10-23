@@ -1,0 +1,59 @@
+{
+  "entries": [
+    {
+      "category": "university",
+      "topic": "KABARAK UNIVERSITY TVET PROGRAMS - Diploma",
+      "content": "Entry Requirements: KCSE C-\nDuration: 3-7 terms\nTuition: KES 23,000/semester\nPrograms:\n- Information & Communication Technology\n- Banking and Finance\n- Entrepreneurship Development\n- Nutrition and Dietetics Management\n- Tourism Management\n- Computer Science\n- Electrical and Electronics Engineering\n- Building and Civil Engineering\n- Mechanical Engineering\n- Automotive Engineering"
+    },
+    {
+      "category": "university",
+      "topic": "KABARAK UNIVERSITY TVET PROGRAMS - Certificate",
+      "content": "Entry Requirements: KCSE D plain\nDuration: 2-3 terms\nTuition: KES 20,000/semester\nPrograms:\n- Information & Communication Technology\n- Banking and Finance\n- Entrepreneurship Development\n- Secretarial Studies\n- Tourism Management\n- Engineering Programs (Electrical, Building, Mechanical, Automotive)"
+    },
+    {
+      "category": "university",
+      "topic": "MERU UNIVERSITY TVET PROGRAMS - Diploma",
+      "content": "Entry Requirements: KCSE C- or equivalent\nPrograms:\n- Animal Health and Production\n- Agriculture\n- Horticultural Production\n- Business Management\n- Information Technology\n- Electrical Engineering"
+    },
+    {
+      "category": "university",
+      "topic": "MERU UNIVERSITY TVET PROGRAMS - Certificate",
+      "content": "Programs:\n- Animal Health and Production (Entry: KCSE C-)\n- Agriculture (Entry: KCSE D plain)"
+    },
+    {
+      "category": "university",
+      "topic": "PWANI UNIVERSITY TVET PROGRAMS - Diploma",
+      "content": "Entry Requirements: KCSE C-\nDuration: 2 years\nTuition: KES 91,400/year\nPrograms:\n- Agricultural Extension\n- Business Management\n- Information Technology"
+    },
+    {
+      "category": "university",
+      "topic": "PWANI UNIVERSITY TVET PROGRAMS - Certificate",
+      "content": "Entry Requirements: KCSE D+\nDuration: 2 years\nTuition: KES 56,400/year\nPrograms:\n- Community and Public Health\n- General Agriculture"
+    },
+    {
+      "category": "general",
+      "topic": "APPLICATION PROCESSES",
+      "content": "- Multiple intakes: January, May, September\n- Online applications available\n- Application fees range from KES 500-1000\n- Required documents: KCSE certificate/result slip"
+    },
+    {
+      "category": "course",
+      "topic": "Courses for KCSE Grade D",
+      "content": "With a KCSE mean grade of D, you can pursue the following certificate courses:\n- Certificate in Information & Communication Technology\n- Certificate in Banking and Finance\n- Certificate in Entrepreneurship Development\n- Certificate in Secretarial Studies\n- Certificate in Tourism Management\n- Certificate in General Agriculture\n- Certificate in Masonry and Building Construction\n- Certificate in Welding and Fabrication\n- Certificate in Food and Beverage Production\n- Certificate in Hair and Beauty"
+    },
+    {
+      "category": "course",
+      "topic": "Courses for KCSE Grade D+",
+      "content": "With a KCSE mean grade of D+, you can pursue the following courses:\n- Certificate in Community and Public Health\n- Certificate in General Agriculture\n- Certificate in Business Management\n- Certificate in Computer Applications\n- Certificate in Sales and Marketing\n- Certificate in Supply Chain Management\n- Certificate in Early Childhood Development Education\n- Certificate in Food Processing Technology\n- Certificate in Electrical Installation\n- Certificate in Automotive Engineering"
+    },
+    {
+      "category": "course",
+      "topic": "Courses for KCSE Grade C-",
+      "content": "With a KCSE mean grade of C-, you can pursue diploma courses including:\n- Diploma in Information & Communication Technology\n- Diploma in Banking and Finance\n- Diploma in Business Management\n- Diploma in Tourism Management\n- Diploma in Computer Science\n- Diploma in Electrical Engineering\n- Diploma in Building and Civil Engineering\n- Diploma in Mechanical Engineering\n- Diploma in Animal Health and Production\n- Diploma in Agriculture"
+    },
+    {
+      "category": "course",
+      "topic": "Course Requirements Overview",
+      "content": "General grade requirements for different course levels:\n- Certificate Courses: KCSE D and above\n- Diploma Courses: KCSE C- and above\n- Higher Diploma: KCSE C and above\n- Degree Programs: KCSE C+ and above\n\nNote: Some specific courses may have additional subject requirements or different grade thresholds. It's recommended to check with individual institutions for detailed requirements."
+    }
+  ]
+}
