@@ -38,7 +38,7 @@ Student Question: ${prompt}
 
 Please provide a helpful, friendly, and informative response. If the question is about specific courses or institutions, try to include both university and TVET options when applicable. Remember to be encouraging and supportive while maintaining accuracy in your advice about Kenyan education.`;
 
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
     const result = await model.generateContent(fullPrompt);
     const response = await result.response;
     return response.text();
